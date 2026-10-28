@@ -298,6 +298,61 @@ h3 {
   font-size: 12px;
 }
 
+.entry-links {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-top: 30px;
+}
+
+.entry-links a {
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--card);
+  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.entry-links a:hover {
+  border-color: rgba(31, 107, 79, 0.45);
+  transform: translateY(-1px);
+  box-shadow: 0 10px 24px -20px rgba(32, 28, 23, 0.5);
+}
+
+.entry-links span {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.entry-links em {
+  display: block;
+  margin-top: 2px;
+  font-style: normal;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.inline-link {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.footer-links a {
+  color: var(--ink-2);
+}
+
+.footer-links a:hover {
+  color: var(--accent);
+}
+
 /* screenshots */
 
 .shot {
@@ -876,6 +931,10 @@ h3 {
     grid-template-columns: repeat(2, 1fr);
   }
 
+  .entry-links {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
   .feature,
   .split,
   .run-card {
@@ -916,6 +975,10 @@ h3 {
 
   .grid-3,
   .stats {
+    grid-template-columns: 1fr;
+  }
+
+  .entry-links {
     grid-template-columns: 1fr;
   }
 
