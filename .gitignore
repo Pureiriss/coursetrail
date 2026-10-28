@@ -51,3 +51,6 @@ data/
 
 # Qoder site descriptor
 *.qoder.site
+
+# local tunnel binary
+.tools/
