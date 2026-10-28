@@ -9,17 +9,11 @@
 
 ## 2. 代码仓库
 
-- 本地仓库：项目根目录（`git` 已初始化，完整源码已提交）
-- 目标远端：`git@github.com:Pureiriss/coursetrail.git`（**待创建**）
-- 可见性：Public
-
-创建仓库后推送：
-
-```bash
-git remote add origin git@github.com:Pureiriss/coursetrail.git
-git branch -M main
-git push -u origin main
-```
+- 地址：https://github.com/Pureiriss/coursetrail
+- 可见性：**Public**（匿名访问返回 200）
+- 默认分支：`main`
+- 当前提交：`e8845bd`
+- 克隆：`git clone git@github.com:Pureiriss/coursetrail.git`
 
 仓库不包含：`node_modules/`、`.next/`、`data/uploads/`、`.env.local`、截图临时文件与 Qoder 站点描述文件。
 

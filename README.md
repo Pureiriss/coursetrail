@@ -147,6 +147,7 @@ docs/devlog/           开发过程记录
 ## 比赛说明
 
 - 作品网站（公开）：https://coursetrail-ukrnh1e2s5p.qoder.zone
+- 代码仓库（公开）：https://github.com/Pureiriss/coursetrail
 - 开发全程在 Qoder 内完成，过程记录见 [`docs/devlog/2026-10-28.md`](docs/devlog/2026-10-28.md)、[`docs/qoder-record.md`](docs/qoder-record.md) 与站内 `/devlog` 页面。
 - 指定技术选择 **seekdb**，承担数据存储、全文/向量检索与复习状态读写；未使用 PowerContext。
 - 提交材料：[提交清单](docs/submission.md) · [验证样例](docs/verification.md) · [Qoder 开发记录](docs/qoder-record.md)。
