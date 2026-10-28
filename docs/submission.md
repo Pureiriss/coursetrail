@@ -3,14 +3,20 @@
 ## 1. 项目网站（公开）
 
 - 网址：https://coursetrail-ukrnh1e2s5p.qoder.zone
-- 可见范围：**任何人都可访问**（匿名请求返回 200）
+- 可见范围：**任何人都可访问**
 - 托管：Qoder Sites
-- 站点内容包括：项目介绍、真实功能截图、seekdb 架构与检索 SQL、示例数据与评测、开发日志、本地运行指引。
+- 站点内容包括：项目介绍、真实功能截图、seekdb 架构与检索 SQL、示例数据与评测、开发日志、本地运行指引，以及代码仓库与验证样例入口。
+
+### 体验入口
+
+- 在线实例（临时）：https://stated-antenna-heel-slope.trycloudflare.com
+- 说明：实例以生产构建运行在开发机上，通过 Cloudflare 临时隧道暴露；仅在服务开启时可访问，重启隧道后地址会变化。门户的「在线体验」按钮会自动检测，不可达时降级提示本地运行。
+- 长期可用：按「运行说明」在任意支持 Docker 的主机执行同样五步即可。
 
 ## 2. 代码仓库
 
 - 地址：https://github.com/Pureiriss/coursetrail
-- 可见性：**Public**（匿名访问返回 200）
+- 可见性：**Public**
 - 默认分支：`main`
 - 当前提交：`e8845bd`
 - 克隆：`git clone git@github.com:Pureiriss/coursetrail.git`
@@ -41,5 +47,7 @@
 
 见 [qoder-record.md](qoder-record.md)，包含开发时间线、Qoder 在各环节完成的工作、人工判断点，以及待补充的截图清单。
 
-- Qoder 账号 UID：**待填写**（桌面端「设置 → 账号」可查看）
-- 截图/录屏：**待补充**（清单见文档第 4 节）
+- Qoder 账号 UID：1442293114196855
+- 截图/录屏：
+  
+  ![48308fec-b697-4250-8dbb-85aa76fa5382](file:///C:/Users/iris/Pictures/Typedown/48308fec-b697-4250-8dbb-85aa76fa5382.png)

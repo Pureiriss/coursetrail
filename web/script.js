@@ -60,3 +60,17 @@ for (const button of document.querySelectorAll("[data-copy]")) {
     }
   });
 }
+
+const live = document.getElementById("live-demo");
+if (live) {
+  const note = document.getElementById("live-note");
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 6000);
+  fetch(`${live.href}/api/stats`, { mode: "no-cors", cache: "no-store", signal: controller.signal })
+    .catch(() => {
+      live.classList.add("offline");
+      live.textContent = "在线实例离线 · 请本地运行";
+      if (note) note.textContent = "在线实例当前不可达，可按下方步骤在本地启动完整应用。";
+    })
+    .finally(() => clearTimeout(timer));
+}

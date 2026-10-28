@@ -298,6 +298,30 @@ h3 {
   font-size: 12px;
 }
 
+.status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #7ce0a8;
+  box-shadow: 0 0 0 3px rgba(124, 224, 168, 0.18);
+}
+
+.btn.offline {
+  background: var(--paper-deep);
+  border-color: var(--line);
+  color: var(--muted);
+  pointer-events: none;
+}
+
+.btn.offline .status-dot {
+  background: var(--muted);
+  box-shadow: none;
+}
+
+.live-note {
+  margin: 10px 0 0;
+}
+
 .entry-links {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
