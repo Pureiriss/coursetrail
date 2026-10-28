@@ -196,7 +196,31 @@ ORDER BY c.chunk_index;
 
 预期 4 行，`page_no` 依次为 1、1、2、2。
 
-## 6. 可选：真实 embedding
+## 6. 样例 E：记忆保存与复用
+
+**输入**：搜索「贝叶斯」；把每日目标改为 12；复习一张卡。
+
+**操作步骤与预期结果**
+
+1. 打开 `http://localhost:3000/search?q=贝叶斯`，然后关闭页面。
+2. 回到首页：出现「上次搜过：贝叶斯」；打开 `/memory`，「最近检索」也能看到这条记录。
+3. 在 `/memory` 把每日目标改为 12，刷新页面仍是 12。
+4. 重启应用（停止后重新 `npm run dev` 或 `npm start`），再打开 `/memory`：目标、检索历史、今日复习数都还在。
+5. 在 `/review` 复习一张卡后，`/memory` 的「今日复习」与「累计评分」各加 1。
+
+**数据来源**
+
+```sql
+SELECT query, hit_count, created_at FROM search_history ORDER BY id DESC LIMIT 5;
+SELECT * FROM prefs;
+SELECT COUNT(*) AS reviews FROM reviews;
+```
+
+预期：`search_history` 有「贝叶斯」；`prefs` 中 `daily_goal = 12`；`reviews` 计数与实际评分次数一致。
+
+**复用点**：首页直接读取 `search_history` 渲染快捷检索；复习页读取 `prefs.daily_goal` 显示今日进度；`/memory` 汇总 `reviews` 与 `cards` 计算连续天数与薄弱卡片。三处都不是前端常量，而是每次从 seekdb 读回。
+
+## 7. 可选：真实 embedding
 
 未配置 `EMBEDDING_API_URL` 时使用本地 2/3-gram 特征哈希向量，检索可用但语义精度有限（这也是门户评测表里三种方式差距不大的原因）。配置后重新 seed（或重建片段）即可获得真正的语义召回：
 
@@ -207,7 +231,7 @@ EMBEDDING_MODEL=BAAI/bge-m3
 EMBEDDING_DIM=1024
 ```
 
-## 7. 证据清单
+## 8. 证据清单
 
 - 真实界面截图：`web/assets/home.jpg`、`search.jpg`、`library.jpg`、`review.jpg`、`devlog.jpg`
 - 公开站点：https://coursetrail-ukrnh1e2s5p.qoder.zone

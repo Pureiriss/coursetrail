@@ -1,8 +1,11 @@
 import { ReviewBoard } from "@/components/ReviewBoard";
+import { getDailyGoal } from "@/lib/memory";
 
 export const dynamic = "force-dynamic";
 
-export default function ReviewPage() {
+export default async function ReviewPage() {
+  const goal = await getDailyGoal().catch(() => 10);
+
   return (
     <div className="mx-auto max-w-3xl">
       <div className="mb-6">
@@ -12,7 +15,7 @@ export default function ReviewPage() {
           卡片从原文片段生成，评分后按遗忘曲线安排下一次。操作：空格翻面，1–4 评分。
         </p>
       </div>
-      <ReviewBoard />
+      <ReviewBoard goal={goal} />
     </div>
   );
 }

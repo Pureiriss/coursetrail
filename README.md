@@ -14,6 +14,7 @@
 - **混合检索**：`cosine_distance()` 与 `MATCH … AGAINST` 在同一条 SQL 中计算，应用层按 0.62 / 0.38 融合；弱相关结果会被阈值过滤。
 - **来源可追溯**：每个片段都带资料、课程、页码，结果页直接打开原文件对应页。
 - **间隔复习**：从原文片段生成问答卡（接入大模型时质量更高），四档评分后由 FSRS 计算下次到期时间，评分记录写回数据库。
+- **学习记忆**：检索历史、每日目标、薄弱卡片与复习统计都写入 seekdb；首页直接显示上次搜过的词，复习页按目标算进度，重启后仍然接得上。
 - **零依赖兜底**：没有配置 embedding / LLM 时，使用本地特征哈希向量与模板卡片，全流程依然可以跑通。
 
 ## 技术栈
@@ -121,6 +122,7 @@ src/
     search/            检索结果
     library/           资料库与上传
     review/            复习
+    memory/            学习记忆（检索历史、目标、薄弱卡片）
     devlog/            开发日志
   components/          Nav / SearchForm / UploadPanel / ReviewBoard / Highlight
   lib/
@@ -128,6 +130,7 @@ src/
     ingest.ts          PDF / 图片 / 文字入库管线
     search.ts         混合检索与融合排序
     cards.ts           FSRS 排期
+    memory.ts          检索历史、偏好与复习统计
     embed.ts           远程 embedding + 本地哈希兜底
     llm.ts             概念抽取 / 卡片生成 / 图片转写
 scripts/

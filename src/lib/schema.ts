@@ -91,6 +91,15 @@ const statements = [
     v TEXT NOT NULL,
     PRIMARY KEY (k)
   )`,
+  `CREATE TABLE IF NOT EXISTS search_history (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    query VARCHAR(255) NOT NULL,
+    course_id INT DEFAULT NULL,
+    hit_count INT NOT NULL DEFAULT 0,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    KEY idx_created (created_at)
+  )`,
 ];
 
 export async function ensureSchema(): Promise<void> {

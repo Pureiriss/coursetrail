@@ -2,21 +2,36 @@ import Link from "next/link";
 import { SearchForm } from "@/components/SearchForm";
 import { SetupNotice } from "@/components/SetupNotice";
 import { KIND_LABEL } from "@/lib/labels";
+import { getDailyGoal, recentSearches, todayReviews } from "@/lib/memory";
 import { getStats, listCourses, listMaterials } from "@/lib/repo";
 
 export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
-  const data = await Promise.all([getStats(), listCourses(), listMaterials()])
-    .then(([stats, courses, materials]) => ({ stats, courses, materials }))
+  const data = await Promise.all([
+    getStats(),
+    listCourses(),
+    listMaterials(),
+    getDailyGoal(),
+    todayReviews(),
+    recentSearches(4),
+  ])
+    .then(([stats, courses, materials, goal, today, recent]) => ({
+      stats,
+      courses,
+      materials,
+      goal,
+      today,
+      recent,
+    }))
     .catch((error) => {
       console.error(error);
       return null;
     });
   if (!data) return <SetupNotice />;
 
-  const { stats, courses, materials } = data;
-  const recent = materials.slice(0, 6);
+  const { stats, courses, materials, goal, today, recent } = data;
+  const recentMaterials = materials.slice(0, 6);
     const courseOptions = courses.map((course) => ({
       id: course.id,
       name: course.name,
@@ -48,6 +63,37 @@ export default async function HomePage() {
           <Stat label="待复习" value={stats.due} href="/review" accent />
         </section>
 
+        <section className="panel mb-10 flex flex-wrap items-center gap-4 px-5 py-4">
+          <div className="flex flex-wrap items-center gap-3">
+            <span className="eyebrow">学习记忆</span>
+            <span className="text-sm text-ink-soft">
+              今日复习 <span className="font-medium text-ink">{today}</span> / {goal}
+            </span>
+            <span className="h-1.5 w-24 overflow-hidden rounded-full bg-paper-deep">
+              <span
+                className="block h-full rounded-full bg-accent"
+                style={{
+                  width: `${Math.min(100, Math.round((today / Math.max(goal, 1)) * 100))}%`,
+                }}
+              />
+            </span>
+          </div>
+          <div className="ml-auto flex flex-wrap items-center gap-2">
+            {recent.map((item) => (
+              <Link
+                key={item.query}
+                href={`/search?q=${encodeURIComponent(item.query)}`}
+                className="chip hover:border-accent/40 hover:text-accent"
+              >
+                上次搜过：{item.query}
+              </Link>
+            ))}
+            <Link href="/memory" className="text-xs text-accent hover:underline">
+              记忆详情 →
+            </Link>
+          </div>
+        </section>
+
         <section className="mb-10">
           <div className="mb-4 flex items-end justify-between">
             <div>
@@ -59,7 +105,7 @@ export default async function HomePage() {
             </Link>
           </div>
 
-          {recent.length === 0 ? (
+          {recentMaterials.length === 0 ? (
             <div className="panel p-8 text-center">
               <p className="text-sm text-ink-soft">还没有资料。先上传一页笔记试试。</p>
               <Link href="/library" className="btn-primary mt-4">
@@ -68,7 +114,7 @@ export default async function HomePage() {
             </div>
           ) : (
             <div className="grid gap-3 md:grid-cols-2">
-              {recent.map((material) => (
+              {recentMaterials.map((material) => (
                 <Link
                   key={material.id}
                   href={`/search?courseId=${material.courseId}`}

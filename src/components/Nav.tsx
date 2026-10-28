@@ -7,6 +7,7 @@ const items = [
   { href: "/", label: "首页", hint: "总览与检索" },
   { href: "/library", label: "资料库", hint: "上传与归档" },
   { href: "/review", label: "复习", hint: "到期卡片" },
+  { href: "/memory", label: "记忆", hint: "偏好与检索历史" },
   { href: "/devlog", label: "开发日志", hint: "怎么用 Qoder 做的" },
 ];
 

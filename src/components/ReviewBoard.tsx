@@ -26,7 +26,7 @@ const RATINGS = [
   { value: 4, label: "简单", hint: "一眼就会" },
 ];
 
-export function ReviewBoard() {
+export function ReviewBoard({ goal = 10 }: { goal?: number }) {
   const [cards, setCards] = useState<Card[] | null>(null);
   const [index, setIndex] = useState(0);
   const [flipped, setFlipped] = useState(false);
@@ -170,7 +170,9 @@ export function ReviewBoard() {
         <span>
           本轮 {done} / {cards.length}
         </span>
-        <span>今日已复习 {stats.reviewedToday} 张 · 剩余到期 {stats.due} 张</span>
+        <span>
+          今日已复习 {stats.reviewedToday} / {goal} 张 · 剩余到期 {stats.due} 张
+        </span>
       </div>
       <div className="mb-5 h-1.5 overflow-hidden rounded-full bg-paper-deep">
         <div

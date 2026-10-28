@@ -3,6 +3,7 @@ import { Highlight } from "@/components/Highlight";
 import { SearchForm } from "@/components/SearchForm";
 import { SetupNotice } from "@/components/SetupNotice";
 import { KIND_LABEL } from "@/lib/labels";
+import { recordSearch } from "@/lib/memory";
 import { listCourses } from "@/lib/repo";
 import { hybridSearch } from "@/lib/search";
 
@@ -37,6 +38,11 @@ export default async function SearchPage({ searchParams }: PageProps) {
   if (!data) return <SetupNotice />;
 
   const { courses, hits } = data;
+  if (query) {
+    await recordSearch(query, courseId, hits.length).catch((error) => {
+      console.error("记录检索历史失败", error);
+    });
+  }
   const courseOptions = courses.map((course) => ({
       id: course.id,
       name: course.name,
