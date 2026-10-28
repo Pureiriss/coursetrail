@@ -1,26 +1,76 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-paper: #f7f3ea;
+  --color-paper-deep: #efe8d9;
+  --color-card: #fffdf8;
+  --color-ink: #201c17;
+  --color-ink-soft: #524a3c;
+  --color-muted: #8b8272;
+  --color-line: #e2d9c6;
+  --color-accent: #1f6b4f;
+  --color-accent-soft: #e1eee6;
+  --color-amber: #a9761f;
+  --color-amber-soft: #f6ead1;
+  --font-sans: ui-sans-serif, system-ui, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  --font-serif: ui-serif, Georgia, "Songti SC", "SimSun", serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  background: var(--color-paper);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-paper);
+  background-image:
+    radial-gradient(circle at 18% 12%, rgba(31, 107, 79, 0.05), transparent 32%),
+    radial-gradient(circle at 82% 0%, rgba(169, 118, 31, 0.06), transparent 30%);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: rgba(31, 107, 79, 0.16);
+}
+
+@layer components {
+  .panel {
+    @apply rounded-2xl border border-line bg-card;
+  }
+
+  .panel-hover {
+    @apply transition hover:border-accent/40 hover:shadow-[0_10px_30px_-18px_rgba(32,28,23,0.45)];
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-line px-4 py-2 text-sm font-medium text-ink-soft transition hover:border-ink/30 hover:text-ink disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-accent px-5 py-2.5 text-sm font-medium text-white transition hover:bg-accent/90 disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  .input {
+    @apply w-full rounded-xl border border-line bg-card px-3.5 py-2.5 text-sm text-ink outline-none transition placeholder:text-muted/70 focus:border-accent/60 focus:ring-2 focus:ring-accent/10;
+  }
+
+  .label {
+    @apply mb-1.5 block text-xs font-medium tracking-wide text-muted;
+  }
+
+  .chip {
+    @apply inline-flex items-center gap-1 rounded-full border border-line bg-card px-2.5 py-1 text-xs text-ink-soft;
+  }
+
+  .eyebrow {
+    @apply text-[11px] font-semibold uppercase tracking-[0.2em] text-accent;
+  }
+}
+
+mark {
+  background: var(--color-amber-soft);
+  color: var(--color-ink);
+  border-radius: 3px;
+  padding: 0 2px;
 }

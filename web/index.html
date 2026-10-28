@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>课迹 CourseTrail — 把上过的课找回来</title>
+  <meta name="description" content="跨学期的课堂记忆库：手写笔记、课件、板书照片统一入库，用一句模糊的回忆定位到原始那一页，再从原文生成复习卡。数据层基于 seekdb 混合检索。" />
+  <meta name="theme-color" content="#f7f3ea" />
+  <meta property="og:title" content="课迹 CourseTrail" />
+  <meta property="og:description" content="把上过的课，变成找得回来的记忆。基于 seekdb 的跨学期课堂记忆库。" />
+  <meta property="og:image" content="assets/home.jpg" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%231f6b4f'/%3E%3Ctext x='32' y='44' font-size='34' text-anchor='middle' fill='%23fff' font-family='serif'%3E课%3C/text%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header" id="header">
+    <a class="brand" href="#top" aria-label="课迹 CourseTrail 首页">
+      <span class="mark">课</span>
+      <span class="brand-text">课迹<em>CourseTrail</em></span>
+    </a>
+    <nav class="nav" aria-label="页面导航">
+      <a href="#pain">痛点</a>
+      <a href="#features">功能</a>
+      <a href="#arch">架构</a>
+      <a href="#data">数据</a>
+      <a href="#log">日志</a>
+    </nav>
+    <a class="btn btn-small" href="#run">本地体验</a>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <p class="eyebrow reveal">Qoder 比赛作品 · 学习提效</p>
+      <h1 class="reveal">把上过的课，<br />变成找得回来的记忆</h1>
+      <p class="lede reveal">
+        手写笔记、课件、板书照片，统一进 seekdb。一句模糊的回忆，也能定位到原始那一页；
+        再从原文生成复习卡，按遗忘曲线安排下一次。
+      </p>
+      <div class="hero-actions reveal">
+        <a class="btn btn-primary" href="#features">看功能演示</a>
+        <a class="btn btn-ghost" href="#run">本地运行</a>
+      </div>
+      <ul class="hero-meta reveal">
+        <li>Next.js 16</li>
+        <li>seekdb 混合检索</li>
+        <li>FSRS 间隔复习</li>
+        <li>PDF / 图片 / 文字</li>
+      </ul>
+
+      <figure class="shot shot-hero reveal">
+        <div class="shot-bar"><span></span><span></span><span></span><em>localhost:3000</em></div>
+        <img src="assets/home.jpg" width="1440" height="1360" alt="课迹首页：搜索框、课程统计与最近入库的资料" />
+        <figcaption>首页 · 真实运行截图</figcaption>
+      </figure>
+    </section>
+
+    <section class="section" id="pain">
+      <header class="section-head reveal">
+        <p class="eyebrow">为什么做这个</p>
+        <h2>真正难的不是记笔记，是把它找回来</h2>
+        <p>
+          笔记存在文件夹里，回忆却存在脑子里。两者对不上，就会重复经历同一件事：翻半小时，
+          最后还是凭印象重学一遍。
+        </p>
+      </header>
+
+      <div class="grid-3">
+        <article class="card reveal">
+          <span class="num">01</span>
+          <h3>记不清</h3>
+          <p>只记得老师画过一张树状图，却想不起是哪门课、第几页、当时怎么讲的。</p>
+        </article>
+        <article class="card reveal">
+          <span class="num">02</span>
+          <h3>搜不到</h3>
+          <p>关键词搜不出照片里的板书；纯向量又对公式名、方法名、缩写不敏感。</p>
+        </article>
+        <article class="card reveal">
+          <span class="num">03</span>
+          <h3>复习没有落点</h3>
+          <p>划过的重点不会自己回来。不知道今天该看哪一段，也不知道下次什么时候再看。</p>
+        </article>
+      </div>
+
+      <div class="callout reveal">
+        <strong>课迹的做法</strong>
+        <p>
+          把每一份资料切成带出处的片段，同时建向量索引和中文全文索引；检索时两种信号一起算，
+          再把命中的片段变成复习卡。找得到，也接得住。
+        </p>
+      </div>
+    </section>
+
+    <section class="section" id="features">
+      <header class="section-head reveal">
+        <p class="eyebrow">功能</p>
+        <h2>从丢进来到考完试，一整条链路</h2>
+      </header>
+
+      <div class="feature reveal">
+        <div class="feature-copy">
+          <span class="tag">01 · 入库</span>
+          <h3>多模态资料，统一入口</h3>
+          <p>
+            PDF 逐页解析并保留页码；板书照片可以交给视觉模型转写成文字；文字笔记直接粘贴。
+            原始文件全部保留，随时能回到出处。
+          </p>
+          <ul class="ticks">
+            <li>页码级定位，不是整份文档的模糊引用</li>
+            <li>没配模型也能用：本地向量 + 手填说明兜底</li>
+          </ul>
+        </div>
+        <figure class="shot reveal">
+          <div class="shot-bar"><span></span><span></span><span></span><em>资料库</em></div>
+          <img src="assets/library.jpg" width="1440" height="1100" loading="lazy" alt="资料库页面：按课程分组的资料列表与上传表单" />
+        </figure>
+      </div>
+
+      <div class="feature reverse reveal">
+        <div class="feature-copy">
+          <span class="tag">02 · 检索</span>
+          <h3>一条 SQL，两种信号</h3>
+          <p>
+            余弦距离与中文全文相关度在同一条查询里计算，按 0.62 / 0.38 融合；
+            课程、资料类型作为标量条件直接下推，不用在应用层拼三个库的结果。
+          </p>
+          <ul class="ticks">
+            <li>说「画树状图的笔记」也能命中图片</li>
+            <li>弱相关结果会被阈值挡在结果页之外</li>
+          </ul>
+        </div>
+        <figure class="shot reveal">
+          <div class="shot-bar"><span></span><span></span><span></span><em>检索：树状图</em></div>
+          <img src="assets/search.jpg" width="1440" height="960" loading="lazy" alt="检索「树状图」的结果：图片资料与文字笔记，各自显示语义与关键词分数" />
+        </figure>
+      </div>
+
+      <div class="feature reveal">
+        <div class="feature-copy">
+          <span class="tag">03 · 溯源</span>
+          <h3>每条结果都能回到原图</h3>
+          <p>
+            结果卡片带着课程、资料名和页码。点开就是原始那一页，不用再在文件夹和相册之间来回找。
+          </p>
+          <ul class="ticks">
+            <li>图片资料直接显示缩略图</li>
+            <li>PDF 打开后定位到对应页</li>
+          </ul>
+        </div>
+        <figure class="shot tall reveal">
+          <img src="assets/notes.jpg" width="900" height="1350" loading="lazy" alt="手写板书照片：贝叶斯公式的树状图" />
+          <figcaption>示例板书 · 由视觉模型或补充说明参与检索</figcaption>
+        </figure>
+      </div>
+
+      <div class="feature reverse reveal">
+        <div class="feature-copy">
+          <span class="tag">04 · 复习</span>
+          <h3>复习卡从原文长出来</h3>
+          <p>
+            片段生成问答卡，四档评分后由 FSRS 计算下次到期时间。评分记录写回 seekdb，
+            复习进度和卡片状态都留在同一个数据层里。
+          </p>
+          <ul class="ticks">
+            <li>空格翻面，1–4 评分</li>
+            <li>到期队列按遗忘曲线自动更新</li>
+          </ul>
+        </div>
+        <figure class="shot reveal">
+          <div class="shot-bar"><span></span><span></span><span></span><em>复习</em></div>
+          <img src="assets/review.jpg" width="1440" height="620" loading="lazy" alt="复习页面：一道关于贝叶斯后验概率的问题与显示答案按钮" />
+        </figure>
+      </div>
+    </section>
+
+    <section class="section" id="arch">
+      <header class="section-head reveal">
+        <p class="eyebrow">技术架构</p>
+        <h2>seekdb 是承重墙，不是附属品</h2>
+        <p>
+          资料、片段、向量、全文索引、复习状态都在同一个库里。检索不需要跨服务拼装，
+          入库和复习也不需要第二套存储。
+        </p>
+      </header>
+
+      <div class="arch reveal">
+        <div class="arch-row">
+          <div class="arch-node">
+            <span class="node-kicker">浏览器</span>
+            <strong>Next.js 16</strong>
+            <small>App Router · Route Handlers</small>
+          </div>
+          <div class="arch-link"><span>可选</span></div>
+          <div class="arch-node muted-node">
+            <span class="node-kicker">外部服务</span>
+            <strong>模型接口</strong>
+            <small>embedding · 视觉 · 对话</small>
+          </div>
+        </div>
+        <div class="arch-arrow">
+          <span>SQL · 一次查询同时计算向量与全文</span>
+        </div>
+        <div class="arch-node accent wide">
+          <span class="node-kicker">数据层</span>
+          <strong>seekdb</strong>
+          <small>chunks：VECTOR(1024) + FULLTEXT(ik) + course_id · cards：复习状态 · reviews：评分日志</small>
+        </div>
+      </div>
+
+      <div class="grid-3 roles">
+        <article class="card reveal">
+          <h3>Next.js</h3>
+          <p>页面、上传、检索编排、复习排期。没有独立的 Python 服务，一个进程跑完。</p>
+        </article>
+        <article class="card reveal">
+          <h3>seekdb</h3>
+          <p>MySQL 协议直连，单表同时挂 HNSW 向量索引和 IK 全文索引，事务写入片段与卡片。</p>
+        </article>
+        <article class="card reveal">
+          <h3>模型接口（可选）</h3>
+          <p>OpenAI 兼容的 embedding、视觉与对话接口。不配置时自动降级，功能不中断。</p>
+        </article>
+      </div>
+
+      <div class="code-block reveal">
+        <div class="code-head">
+          <span>src/lib/search.ts</span>
+          <button class="copy" data-copy aria-label="复制代码">复制</button>
+        </div>
+        <pre><code>SELECT * FROM (
+  SELECT c.id, c.content, c.page_no,
+         cosine_distance(c.embedding, ?) AS dist,
+         MATCH(c.content) AGAINST(?) AS rel
+  FROM chunks c
+  JOIN materials m ON m.id = c.material_id
+  JOIN courses co ON co.id = c.course_id
+  WHERE c.course_id = ?
+) t
+ORDER BY 0.62 * (CASE WHEN t.dist &lt; 1 THEN 1 - t.dist ELSE 0 END)
+       + 0.38 * (CASE WHEN t.rel &gt;= 0.6 THEN t.rel / (t.rel + 1) ELSE 0 END) DESC
+LIMIT ?;</code></pre>
+      </div>
+
+      <p class="note reveal">
+        为什么要融合：纯全文会把「贝叶斯」拆到无关片段，纯向量又找不到精确术语。
+        示例库里第一版排序召回了 15 条，其中 13 条是弱关键词噪声；加上阈值后同一查询只剩 2 条真正相关。
+      </p>
+    </section>
+
+    <section class="section" id="data">
+      <header class="section-head reveal">
+        <p class="eyebrow">示例数据与评测</p>
+        <h2>开箱就有一套能跑的课程库</h2>
+      </header>
+
+      <div class="stats reveal">
+        <div><strong>3</strong><span>门课程</span></div>
+        <div><strong>13</strong><span>份资料</span></div>
+        <div><strong>27</strong><span>个知识片段</span></div>
+        <div><strong>33</strong><span>张复习卡</span></div>
+      </div>
+
+      <div class="split">
+        <div class="reveal">
+          <h3 class="mini-title">Recall@5 对照</h3>
+          <table class="table">
+            <thead>
+              <tr><th>检索方式</th><th>命中率</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>纯向量</td><td>95.5% <span>(21/22)</span></td></tr>
+              <tr><td>纯全文</td><td>100% <span>(22/22)</span></td></tr>
+              <tr><td>混合检索</td><td><strong>100% (22/22)</strong></td></tr>
+            </tbody>
+          </table>
+          <p class="note">
+            22 条关键词级基准（自动标注），用 <code>npm run eval</code> 复现。
+            语料较小时三种方式都接近上限；本地哈希向量下语义项偏弱，接入 bge-m3 后对比才有意义。
+            这张表用于回归，不用来证明优越性。
+          </p>
+        </div>
+        <div class="reveal">
+          <h3 class="mini-title">示例课程</h3>
+          <ul class="course-list">
+            <li><span>概率论与数理统计</span><em>贝叶斯、常见分布、大数定律</em></li>
+            <li><span>线性代数</span><em>特征值、SVD、最小二乘、秩</em></li>
+            <li><span>机器学习导论</span><em>过拟合、正则化、梯度下降、决策树</em></li>
+          </ul>
+          <p class="note">
+            另含一份 2 页讲义 PDF 与一张板书照片，用于验证页码溯源与图片检索。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="log">
+      <header class="section-head reveal">
+        <p class="eyebrow">开发日志</p>
+        <h2>怎么做出来的，也包括踩过的坑</h2>
+        <p>开发全程在 Qoder 内完成：需求拆解、建表、入库管线、检索 SQL、页面与调试。人负责选型判断和验收。</p>
+      </header>
+
+      <ol class="timeline">
+        <li class="reveal">
+          <span class="when">选题</span>
+          <div>
+            <h3>砍掉一个组件，换来一条更短的链路</h3>
+            <p>对比四个方向后选了学生场景；主动去掉 PowerContext，只保留 seekdb，少一个服务就少一类故障。</p>
+          </div>
+        </li>
+        <li class="reveal">
+          <span class="when">验证</span>
+          <div>
+            <h3>先写探针，再写业务</h3>
+            <p>逐条确认 IK 中文分词、COSINE 向量索引、cosine_distance() 可用之后，才开始生成 schema。</p>
+          </div>
+        </li>
+        <li class="reveal">
+          <span class="when">调优</span>
+          <div>
+            <h3>把噪声从结果里赶出去</h3>
+            <p>相关度阈值 + 句子边界切块，解决「弱关键词混进前排」和「片段从半句话开始」两个问题。</p>
+          </div>
+        </li>
+        <li class="reveal">
+          <span class="when">修复</span>
+          <div>
+            <h3>三个让页面打不开的问题</h3>
+            <p>Tailwind 缺 PostCSS 配置导致整站无样式；pdfjs v5 没有 destroy()；文件接口的流式返回拖垮 Turbopack worker。</p>
+          </div>
+        </li>
+        <li class="reveal">
+          <span class="when">验收</span>
+          <div>
+            <h3>端到端跑一遍</h3>
+            <p>上传 PDF 与图片、检索命中、打开原文、评分顺延到期时间；tsc、eslint、next build 全部通过。</p>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <section class="section" id="run">
+      <div class="run-card reveal">
+        <div>
+          <p class="eyebrow">本地体验</p>
+          <h2>五条命令，起一套完整的课程库</h2>
+          <p class="lede small">
+            这个页面是静态展示；应用本体需要本地 Docker 与 seekdb，因为检索与复习状态都在数据库里。
+            示例课程已内置，启动后即可上传、检索和复习。
+          </p>
+          <p class="note">前置：Node.js 20+ 与 Docker。首次启动 seekdb 需要拉取镜像。</p>
+        </div>
+        <div class="code-block">
+          <div class="code-head">
+            <span>终端</span>
+            <button class="copy" data-copy aria-label="复制命令">复制</button>
+          </div>
+          <pre><code>docker compose up -d
+npm install
+npm run db:init
+npm run db:seed
+npm run dev</code></pre>
+        </div>
+      </div>
+
+      <p class="note center reveal">
+        可选：在 <code>.env.local</code> 填入 OpenAI 兼容的 embedding / 视觉 / 对话接口，
+        即可启用手写转写与更好的语义召回；不配置也能完整运行。
+      </p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="brand">
+        <span class="mark">课</span>
+        <span class="brand-text">课迹<em>CourseTrail</em></span>
+      </div>
+      <p>跨学期课堂记忆库 · 数据层 seekdb · 用 Qoder 开发并通过 Qoder Sites 发布</p>
+      <p class="muted">2026 · 示例数据均为公开课程内容与自制板书</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

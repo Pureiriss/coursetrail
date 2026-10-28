@@ -1,0 +1,13 @@
+services:
+  seekdb:
+    image: oceanbase/seekdb:latest
+    container_name: seekdb
+    ports:
+      - "2881:2881"
+      - "2886:2886"
+    volumes:
+      - seekdb_data:/var/lib/oceanbase
+    restart: unless-stopped
+
+volumes:
+  seekdb_data:
